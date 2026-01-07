@@ -338,86 +338,7 @@ Response:
 }
 ```
 
----
-
-## 7. Streamlit UI (optional)
-
-If you add `streamlit_app.py`, the typical pattern is:
-
-* A file uploader for `.py` files.
-* The app sends the file to the Cloud Run `/review` endpoint.
-* It displays:
-
-  * The overall score.
-  * The list of issues by category.
-  * The evaluator comments.
-  * Optional diff patch.
-
-Example run:
-
-```bash
-streamlit run streamlit_app.py
-```
-
-You can mention the Streamlit URL or a short screen recording in your submission.
-
----
-
-## 8. How this maps to the Kaggle evaluation criteria
-
-### Category 1: The Pitch
-
-* **Problem**: Make static Python code review more intelligent, explainable, and history aware.
-* **Solution**:
-
-  * Combine classic static analysis tools with multi agent orchestration.
-  * Use Gemini as a judge to unify outputs and reason about history.
-  * Provide optional auto patch suggestions.
-* **Value**:
-
-  * Helps developers quickly understand style, correctness, security, and performance in one place.
-  * Shows how agents can orchestrate tools and memory for a non trivial workflow.
-
-### Category 2: Implementation
-
-* **Agent concepts from the course used**:
-
-  * Tools and function calling (pycodestyle, pylint, bandit, custom services).
-  * Multi agent orchestrations (ParallelAgent + SequentialAgent).
-  * LLM as a judge (evaluator agent).
-  * Memory bank (disk based review history per file).
-* **Code quality**:
-
-  * Structured Pydantic models.
-  * Clear separation between agents and service layer.
-  * Strong typing for tool outputs.
-
-### Bonus
-
-* **Effective use of Gemini**:
-
-  * Gemini used in each agent for reasoning, including evaluator and patch generator.
-* **Agent deployment**:
-
-  * Deployed on Cloud Run with documented Dockerfile and `gcloud` commands.
-* **Video (optional)**:
-
-## 9. Limitations and future work
-
-Current limitations:
-
-* Only Python is supported.
-* Performance review is a simple stub and can be extended.
-* Patches are generated as diffs, but auto application is not fully automated in this project.
-
-Possible extensions:
-
-* True multi language support.
-* Richer memory analysis across many files and repositories.
-* GitHub pull request integration.
-* More advanced performance heuristics.
-
-## 10. Repository structure
+## 7. Repository structure
 
 ```text
 ai-code-reviewer/
@@ -445,4 +366,5 @@ ai-code-reviewer/
   requirements.txt
   Dockerfile
   README.md
+
 
