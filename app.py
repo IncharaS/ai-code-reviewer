@@ -7,7 +7,6 @@ from fastapi.responses import JSONResponse
 
 from google.adk.runners import InMemoryRunner
 
-# Import your root agent
 from agents.review_coordinator_agent import coordinator_agent
 
 app = FastAPI(
@@ -26,14 +25,10 @@ async def run_review_on_path(path: str) -> str:
     runner.run_debug(prompt) -> final natural-language summary.
     """
     prompt = f"Please review the Python file at: {path}"
-    # run_debug is async in the newer ADK versions
     resp = await runner.run_debug(prompt)
-    # In your logs, resp is often just the final string (but sometimes a list of Events).
-    # Normalize to string for the API response.
     if isinstance(resp, str):
         return resp
 
-    # If it's a list of Events, extract any text parts
     try:
         from google.genai.types import Content, Part  # type: ignore
 
@@ -72,7 +67,6 @@ async def review_file(file: UploadFile = File(...)):
         except UnicodeDecodeError:
             raise HTTPException(status_code=400, detail="File is not valid UTF-8 text.")
 
-        # Save to a temporary file, because all your review tools expect a file path.
         with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file.filename)[1] or ".py") as tmp:
             tmp.write(code_text.encode("utf-8"))
             tmp_path = tmp.name
