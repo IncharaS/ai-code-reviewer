@@ -1,7 +1,7 @@
 import sys
 import asyncio
 from google.adk.runners import InMemoryRunner
-from agents.review_coordinator_agent import coordinator_agent  # or your review_coordinator_agent
+from agents.review_coordinator_agent import coordinator_agent 
 
 
 async def main():
